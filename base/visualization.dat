@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<visualizationData type="{{filename}}">
+  <graphics>
+    <visualization size="1" layerCount="1" angle="360"/>
+    <visualization size="64" layerCount="1" angle="45">
+      <layers>
+         {{visu_layer}}
+      </layers>
+      <directions>
+        {{visu_rot}}
+      </directions>
+      <colors/>
+      <animations>
+        <animation id="0">
+          <animationLayer id="0" frameRepeat="{{framerepeat}}" loopCount="0">
+            <frameSequence>
+              {{frame}}
+            </frameSequence>
+          </animationLayer>
+        </animation>
+      </animations>
+    </visualization>
+  </graphics>
+</visualizationData>
