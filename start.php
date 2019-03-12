@@ -1,5 +1,5 @@
 <?php 
-class Generate
+class Generate_Furni
 {
     private $_gif;
     private $_filename;
@@ -254,7 +254,7 @@ while (false != ($file = readdir(opendir("./gif")))) {
     else
         $type = 0;
 
-    $generateLittle = new Generate($name, $type);
+    $generateLittle = new Generate_Furni($name, $type);
     $generateLittle->Start();
 
     echo $name." : ".$type."\n";
