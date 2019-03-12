@@ -25,13 +25,13 @@ class Generate
             mkdir($this->_output.$this->_filename);
     }
 
-    public function Start()
+    public function start()
     {
-        $this->GenerateImages();
-        $this->GenerateDat();
+        $this->_generateImages();
+        $this->_generateDat();
     }
 
-    private function GenerateDat()
+    private function _generateDat()
     {
         foreach(['manifest', 'assets', 'logic', 'visualization', 'index'] as $id)
         {
@@ -67,7 +67,7 @@ class Generate
         }
     }
 
-    private function GenerateImages()
+    private function _generateImages()
     {
         $rot = 2;
         $i = 0;
@@ -75,7 +75,7 @@ class Generate
 
             $frame->setImageCompressionQuality(85);
             //if($this->_furniType == 0)
-                //$this->ResizeImage($frame, 64, 110);
+                //$this->_resizeImage($frame, 64, 110);
 
             if($this->_furniType == 1)
             {
@@ -85,7 +85,7 @@ class Generate
 
             if($i == 0)
             {
-                $icon = $this->GenerateIcon($frame);
+                $icon = $this->_generateIcon($frame);
                 $icon->writeImage($this->_output.$this->_filename."/".$this->_filename."_".$this->_filename."_icon_a.png");
                 $icon->destroy();
             }
@@ -93,9 +93,9 @@ class Generate
             if($this->_furniType != 0)
             {
                 if($this->_furniType == 1)
-                    $this->ConvertToPoster($frame, $rot);
+                    $this->_convertToPoster($frame, $rot);
                 else if($this->_furniType == 2)
-                    $this->ConvertToFloor($frame, $rot);
+                    $this->_convertToFloor($frame, $rot);
 
                 $furniX = floor($frame->getImageWidth() / 2);
                 $furniY = $frame->getImageWidth();
@@ -122,14 +122,13 @@ class Generate
 
         if($this->_furniType == 0)
         {
-            //ombre mobi
             copy($this->_base."sd.png", $this->_output.$this->_filename."/".$this->_filename."_".$this->_filename."_64_sd_0_0.png");
             $this->_assetsPosition .= '<asset name="'.$this->_filename.'_64_sd_'.$rot.'_0" x="15" y="8"/>'."\n";
             $this->_assets .= '<asset name="'.$this->_filename.'_64_sd_'.$rot.'_0" mimeType="image/png"/>'."\n";
         }
     }
 
-    private function ConvertToPoster($frame, $rot)
+    private function _convertToPoster($frame, $rot)
     {
         $width = $frame->getImageWidth();
         $height = $frame->getImageHeight();
@@ -157,7 +156,7 @@ class Generate
         $frame->setImage($im);
     }
 
-    private function ConvertToFloor($frame, $rot)
+    private function _convertToFloor($frame, $rot)
     {
         $width = $frame->getImageWidth();
         $height = $frame->getImageHeight();
@@ -203,7 +202,7 @@ class Generate
         $frame->setImage($im);
     }
 
-    private function GenerateIcon($frame)
+    private function _generateIcon($frame)
     {
         $width = $frame->getImageWidth();
         $height = $frame->getImageHeight();
@@ -223,7 +222,7 @@ class Generate
         return $icon;
     }
 
-    private function ResizeImage($frame, $w, $h)
+    private function _resizeImage($frame, $w, $h)
     {
         $width = $frame->getImageWidth();
         $height = $frame->getImageHeight();
@@ -239,8 +238,7 @@ class Generate
     }
 }
 
-$pointeur=opendir("./gif");
-while (false != ($file = readdir($pointeur))) {
+while (false != ($file = readdir(opendir("./gif")))) {
 	if($file == '.' || $file == '..')
         continue;
     if(explode('.', $file)[1] != "gif")
@@ -251,7 +249,7 @@ while (false != ($file = readdir($pointeur))) {
 
     if(strpos($name, "poster_") !== false) // 0 normal, 1 poster, 2 sol
         $type = 1;
-    else if(strpos($name, "floor_") !== false) // 0 normal, 1 poster, 2 sol
+    else if(strpos($name, "floor_") !== false)
         $type = 2;
     else
         $type = 0;
