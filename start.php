@@ -238,7 +238,8 @@ class Generate_Furni
     }
 }
 
-while (false != ($file = readdir(opendir("./gif")))) {
+$openDir = opendir("./gif");
+while (false != ($file = readdir($openDir))) {
 	if($file == '.' || $file == '..')
         continue;
     if(explode('.', $file)[1] != "gif")
